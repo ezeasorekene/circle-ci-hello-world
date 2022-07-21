@@ -36,6 +36,20 @@ jobs:
           name: "Print Job"
           command: "echo job"
 
+  shout-my-name:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: cimg/base:stable
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      - run:
+          name: "Shout my name"
+          command: |
+            echo $MY_NAME_VAR
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -43,6 +57,7 @@ workflows:
     jobs:
       - say-hello
       - print_world
+      - shout-my-name
       - print_hello:
           requires:
             - print_world
