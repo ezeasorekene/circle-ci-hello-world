@@ -20,7 +20,6 @@ jobs:
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-      - checkout
       - run:
           name: "Save hello"
           command: |
@@ -54,7 +53,6 @@ jobs:
   fetch-hello:
     executor: my-executor
     steps:
-      # - checkout
       - attach_workspace:
           at: /ekene/hello-path
       - run:
