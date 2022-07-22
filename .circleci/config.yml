@@ -24,11 +24,10 @@ jobs:
           name: "Save hello"
           command: |
             mkdir -p ekene && \
-            cd ekene && mkdir -p hello-path && \
-            echo Hello, World! > output.txt
+            echo Hello, World! > ekene/output.txt
       - persist_to_workspace:
           root: ekene
-          paths: hello-path
+          paths: output.txt
 
   print_hello:
     docker:
@@ -52,12 +51,12 @@ jobs:
     executor: my-executor
     steps:
       - attach_workspace:
-          at: /tmp/ekene/hello-path
+          at: /tmp/ekene
       - run:
           name: "Fetch Hello"
           command: |
             pwd && \
-            cd /tmp/ekene/hello-path && \
+            cd /tmp/ekene && \
             ls -a && \
             cat output.txt
 
