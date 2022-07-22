@@ -4,12 +4,19 @@ version: 2.1
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+
+executors:
+  my-executor:
+    docker:
+      - image: cimg/base:stable
+    working_directory: ~/
+
+
 jobs:
   save-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
+    executor: my-executor
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
@@ -23,7 +30,7 @@ jobs:
             cd hello-path && \
             echo Hello, World! > output.txt
       - persist_to_workspace:
-          root: ~/ekene
+          root: ekene
           paths: hello-path
 
   print_hello:
@@ -45,12 +52,11 @@ jobs:
           command: "echo job"
 
   fetch-hello:
-    docker:
-      - image: cimg/base:stable
+    executor: my-executor
     steps:
       # - checkout
       - attach_workspace:
-          at: ~/ekene/hello-path
+          at: /ekene/hello-path
       - run:
           name: "Fetch Hello"
           command: |
