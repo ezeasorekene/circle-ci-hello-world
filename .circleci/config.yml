@@ -19,7 +19,7 @@ jobs:
           command: |
             echo Hello, World! > output.txt
       - persist_to_workspace:
-          root: /tmp/galaxy
+          root: /
           paths: hello-path
 
   print_hello:
@@ -46,7 +46,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /tmp/galaxy/hello-path
+          at: /hello-path
       - run:
           name: "Fetch Hello"
           command: |
