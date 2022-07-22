@@ -59,6 +59,7 @@ jobs:
           command: |
             pwd && \
             cd /tmp/ekene/hello-path && \
+            ls -a && \
             cat output.txt
 
   shout-my-name:
