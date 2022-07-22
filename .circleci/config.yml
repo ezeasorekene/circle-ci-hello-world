@@ -9,7 +9,7 @@ executors:
   my-executor:
     docker:
       - image: cimg/base:stable
-    working_directory: ~/
+    working_directory: /tmp
 
 
 jobs:
@@ -23,8 +23,7 @@ jobs:
       - run:
           name: "Save hello"
           command: |
-            pwd && \
-            cd ~ && mkdir -p ekene && \
+            mkdir -p ekene && \
             cd ekene && mkdir -p hello-path && \
             cd hello-path && \
             echo Hello, World! > output.txt
@@ -54,7 +53,7 @@ jobs:
     executor: my-executor
     steps:
       - attach_workspace:
-          at: /ekene/hello-path
+          at: /tmp/ekene/hello-path
       - run:
           name: "Fetch Hello"
           command: |
