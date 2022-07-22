@@ -57,7 +57,9 @@ jobs:
       - run:
           name: "Fetch Hello"
           command: |
-            pwd && ls -a && cat output.txt
+            pwd && \
+            cd /tmp/ekene/hello-path && \
+            cat output.txt
 
   shout-my-name:
     docker:
