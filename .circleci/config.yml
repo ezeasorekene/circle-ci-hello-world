@@ -53,7 +53,7 @@ jobs:
       - run:
           name: "Fetch Hello"
           command: |
-            cat output.txt
+            pwd && ls -a && cat output.txt
 
   shout-my-name:
     docker:
