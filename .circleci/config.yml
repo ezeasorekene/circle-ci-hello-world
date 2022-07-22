@@ -1,0 +1,93 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+
+executors:
+  my-executor:
+    docker:
+      - image: cimg/base:stable
+    working_directory: /tmp
+
+
+jobs:
+  save-hello:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    executor: my-executor
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - run:
+          name: "Save hello"
+          command: |
+            mkdir -p ekene && \
+            echo Hello, World! > ekene/output.txt
+      - persist_to_workspace:
+          root: ekene
+          paths: output.txt
+
+  print_hello:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run:
+          name: "Print Hello"
+          command: "echo hello"
+  
+  print_world:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run:
+          name: "Print Job"
+          command: "echo job"
+
+  fetch-hello:
+    executor: my-executor
+    steps:
+      - attach_workspace:
+          at: /tmp/ekene
+      - run:
+          name: "Fetch Hello"
+          command: |
+            pwd && \
+            cd /tmp/ekene && \
+            ls -a && \
+            cat output.txt
+
+  shout-my-name:
+    docker:
+      - image: circleci/node:13.8.0
+    environment:
+      USER: Ngumuntu
+      _NAME: $MY_NAME_VAR
+    steps:
+      - checkout
+      - run:
+          name: "Shout my name"
+          command: |
+            echo $_NAME
+      - run:
+          name: "Shout my nick name"
+          command: |
+            echo $USER
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  say-hello-workflow:
+    jobs:
+      - save-hello
+      - fetch-hello:
+          requires:
+            - save-hello
+      - print_world
+      - shout-my-name
+      - print_hello:
+          requires:
+            - print_world
