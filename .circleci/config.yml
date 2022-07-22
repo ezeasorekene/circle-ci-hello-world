@@ -47,13 +47,13 @@ jobs:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - checkout
+      # - checkout
       - attach_workspace:
-          at: ~/ekene/hello-path
+          at: ~/ekene
       - run:
           name: "Fetch Hello"
           command: |
-            cat output.txt
+            cat hello-path/output.txt
 
   shout-my-name:
     docker:
