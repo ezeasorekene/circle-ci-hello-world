@@ -17,8 +17,7 @@ jobs:
       - run:
           name: "Save hello"
           command: |
-            cd ~ && rm -R ekene && \
-            mkdir -p ekene && \
+            cd ~ && mkdir -p ekene && \
             cd ekene && mkdir -p hello-path && \
             cd hello-path && \
             echo Hello, World! > output.txt
