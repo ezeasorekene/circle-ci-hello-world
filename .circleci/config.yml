@@ -45,16 +45,15 @@ jobs:
 
   fetch-hello:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/base:stable
     steps:
       # - checkout
       - attach_workspace:
-          at: ~/ekene
+          at: ~/ekene/hello-path
       - run:
           name: "Fetch Hello"
           command: |
-            pwd && ls -a \
-            cat hello-path/output.txt
+            cat /output.txt
 
   shout-my-name:
     docker:
