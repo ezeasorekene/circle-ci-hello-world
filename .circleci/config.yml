@@ -17,9 +17,11 @@ jobs:
       - run:
           name: "Save hello"
           command: |
+            cd ~ && mkdir ekene \
+            cd ekene && mkdir hello-path
             echo Hello, World! > output.txt
       - persist_to_workspace:
-          root: /
+          root: ~/ekene
           paths: hello-path
 
   print_hello:
@@ -46,7 +48,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /hello-path
+          at: ~/ekene/hello-path
       - run:
           name: "Fetch Hello"
           command: |
