@@ -53,6 +53,7 @@ jobs:
       - run:
           name: "Fetch Hello"
           command: |
+            pwd && ls -a \
             cat hello-path/output.txt
 
   shout-my-name:
