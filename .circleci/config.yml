@@ -8,13 +8,18 @@ version: 2.1
 commands:
   print_pipeline_id:
     description: "Print the Circle CI Workflow ID"
+    steps:
+      - run: |
+          echo ${CIRCLE_WORKFLOW_ID}
+
+  print_pipeline_values:
+    description: "Print the Circle CI Workflow ID"
     parameters:
       id:
         type: string
     steps:
       - run: |
-          echo ${CIRCLE_WORKFLOW_ID} \
-          && echo << parameters.id >>
+          echo << parameters.id >>
 
 executors:
   my-executor:
@@ -39,7 +44,8 @@ jobs:
       - persist_to_workspace:
           root: ekene
           paths: output.txt
-      - print_pipeline_id:
+      - print_pipeline_id
+      - print_pipeline_values:
           id: << pipeline.id >>
 
   print_hello:
@@ -51,8 +57,9 @@ jobs:
           name: "Print Hello"
           command: "echo hello"
       - print_pipeline_id
-        
-  
+      - print_pipeline_values:
+          id: << pipeline.id >>
+          
   print_world:
     docker:
       - image: circleci/node:13.8.0
@@ -62,6 +69,8 @@ jobs:
           name: "Print Job"
           command: "echo job"
       - print_pipeline_id
+      - print_pipeline_values:
+          id: << pipeline.id >>
 
   fetch-hello:
     executor: my-executor
@@ -76,6 +85,8 @@ jobs:
             ls -a && \
             cat output.txt
       - print_pipeline_id
+      - print_pipeline_values:
+          id: << pipeline.id >>
 
   shout-my-name:
     docker:
@@ -94,6 +105,8 @@ jobs:
           command: |
             echo $USER
       - print_pipeline_id
+      - print_pipeline_values:
+          id: << pipeline.id >>
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
