@@ -5,6 +5,13 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 
+commands:
+  print_pipeline_id:
+    description: "Print the Circle CI Workflow ID"
+    steps:
+      - run: |
+          echo $CIRCLE_WORKFLOW_ID
+
 executors:
   my-executor:
     docker:
@@ -28,6 +35,7 @@ jobs:
       - persist_to_workspace:
           root: ekene
           paths: output.txt
+      - print_pipeline_id
 
   print_hello:
     docker:
@@ -37,6 +45,8 @@ jobs:
       - run:
           name: "Print Hello"
           command: "echo hello"
+      - print_pipeline_id
+        
   
   print_world:
     docker:
@@ -46,6 +56,7 @@ jobs:
       - run:
           name: "Print Job"
           command: "echo job"
+      - print_pipeline_id
 
   fetch-hello:
     executor: my-executor
@@ -59,6 +70,7 @@ jobs:
             cd /tmp/ekene && \
             ls -a && \
             cat output.txt
+      - print_pipeline_id
 
   shout-my-name:
     docker:
@@ -76,6 +88,7 @@ jobs:
           name: "Shout my nick name"
           command: |
             echo $USER
+      - print_pipeline_id
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
