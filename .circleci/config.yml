@@ -39,7 +39,7 @@ jobs:
       - persist_to_workspace:
           root: ekene
           paths: output.txt
-      - print_pipeline_id
+      - print_pipeline_id:
           id: << parameters.id >>
 
   print_hello:
