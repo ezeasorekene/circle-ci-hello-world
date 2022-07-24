@@ -40,7 +40,7 @@ jobs:
           root: ekene
           paths: output.txt
       - print_pipeline_id:
-          id: << parameters.id >>
+          id: << pipeline.id >>
 
   print_hello:
     docker:
