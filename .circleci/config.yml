@@ -104,7 +104,8 @@ jobs:
           name: "Shout my nick name"
           command: |
             echo $USER
-      - run: return 1
+      - run:
+          command: return 1
       - run:
           name: "Shout my nick name"
           command: |
