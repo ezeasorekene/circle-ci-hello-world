@@ -104,13 +104,16 @@ jobs:
           name: "Shout my nick name"
           command: |
             echo $USER
-      - run:
-          command: exit 1
-      - run:
-          name: "Shout my nick name"
-          command: |
-            echo "Just failed"
-          when: on_fail
+      # Script that will be checked for on_fail
+      # - run:
+      #     command: exit 1
+
+      # Script to run if job fails
+      # - run:
+      #     name: "Shout my nick name"
+      #     command: |
+      #       echo "Just failed"
+      #     when: on_fail
       - print_pipeline_id
       - print_pipeline_values:
           id: << pipeline.id >>
