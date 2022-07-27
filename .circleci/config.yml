@@ -103,8 +103,12 @@ jobs:
       - run:
           name: "Shout my nick name"
           command: |
-            echo $USER \
-            && return 1
+            echo $USER
+      - run: return 1
+      - run:
+          name: "Shout my nick name"
+          command: |
+            echo "Just failed"
           when: on_fail
       - print_pipeline_id
       - print_pipeline_values:
