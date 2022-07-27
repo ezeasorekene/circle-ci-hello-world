@@ -74,6 +74,8 @@ jobs:
 
   fetch-hello:
     executor: my-executor
+    when:
+      on_fail
     steps:
       - attach_workspace:
           at: /tmp/ekene
@@ -103,7 +105,8 @@ jobs:
       - run:
           name: "Shout my nick name"
           command: |
-            echo $USER
+            echo $USER \
+            && return 1
       - print_pipeline_id
       - print_pipeline_values:
           id: << pipeline.id >>
